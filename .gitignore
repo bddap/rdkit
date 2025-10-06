@@ -77,6 +77,7 @@ __pycache__/
 /External/YAeHMOP/yaehmop/
 /External/catch/catch/
 /External/rapidjson/rapidjson-*/
+/External/ChemDraw/chemdraw/
 
 /rdkit/RDPaths.py
 /rdkit/Chem/inchi.py
@@ -96,7 +97,6 @@ __pycache__/
 /Code/GraphMol/Depictor/test_data/test1.out.sdf
 /Code/GraphMol/Depictor/test_data/constrainedCoords.out.sdf
 
-
 /Code/GraphMol/FileParsers/test_data/blah.sdf
 /Code/GraphMol/FileParsers/test_data/blah_molsupplier.sdf
 /Code/GraphMol/FileParsers/test_data/cdk2_stereo.sdf
@@ -114,6 +114,9 @@ __pycache__/
 /Code/GraphMol/FileParsers/test_data/outSmiles_molwriter.csv
 /Code/GraphMol/FileParsers/test_data/testSGroupsSample_V?000.mol
 /Code/GraphMol/FileParsers/test_data/testSubstanceGroupsSample_V?000.mol
+
+/Code/GraphMol/MolInteractionFields/test_data/test3.cube
+/Code/GraphMol/MolInteractionFields/Wrap/testData/test4.cube
 
 /Code/GraphMol/ForceFieldHelpers/UFF/test_data/Issue62.sdf
 
@@ -150,3 +153,5 @@ __pycache__/
 Code/MinimalLib/dist
 MAIN_RDKIT_README*
 node_modules
+compile_commands.json
+.cache
