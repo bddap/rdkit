@@ -211,9 +211,29 @@ macro(rdkit_catch_test)
   if(RDK_BUILD_CPP_TESTS)
     add_executable(${RDKTEST_NAME} ${RDKTEST_SOURCES})
     target_link_libraries(${RDKTEST_NAME} PRIVATE rdkitCatch ${RDKTEST_LINK_LIBRARIES} Catch2::Catch2)
-    add_test(${RDKTEST_NAME} ${EXECUTABLE_OUTPUT_PATH}/${RDKTEST_NAME})
+    add_test(${RDKTEST_NAME} ${EXECUTABLE_OUTPUT_PATH}/${RDKTEST_NAME}) 
   endif(RDK_BUILD_CPP_TESTS)
 endmacro(rdkit_catch_test)
+
+get_property(_bench GLOBAL PROPERTY RDKIT_BENCH_TARGET)
+if (NOT _bench)
+  add_executable(benches ${CMAKE_CURRENT_LIST_DIR}/empty.cc)
+  set_property(GLOBAL PROPERTY RDKIT_BENCH_TARGET benches)
+endif()
+
+function(rdkit_catch_bench)
+  # add a catch test file to be compiled into "benches" target
+  get_property(_bench GLOBAL PROPERTY RDKIT_BENCH_TARGET)
+  target_sources(${_bench} PRIVATE ${ARGN})
+endfunction(rdkit_catch_bench)
+
+function(rdkit_catch_bench_link)
+  # link additional libraries to the "benches" target
+  get_property(_bench GLOBAL PROPERTY RDKIT_BENCH_TARGET)
+  target_link_libraries(${_bench} PRIVATE ${ARGN})
+endfunction(rdkit_catch_bench_link)
+
+rdkit_catch_bench_link(rdkitCatch)
 
 macro(add_pytest)
   PARSE_ARGUMENTS(PYTEST
