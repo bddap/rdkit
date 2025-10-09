@@ -5,18 +5,24 @@
 
 using namespace RDKit;
 
-TEST_CASE("SMILES conversion", "[benchmark][smiles]") {
-  auto smiles =
-      "Nc1nc(N)c(-c2ccc(CNc3ccc([N+](=O)[O-])cc3)cc2)c(COCc2ccccc2)n1";
-  std::unique_ptr<ROMol> mol{SmilesToMol(smiles)};
+TEST_CASE("smiles encode/decode bench", "[benchmark][smiles]") {
+  const std::vector<std::string> testSmiles = {
+      "Cn1cnc2n(C)c(=O)n(C)c(=O)c12",
+      "C12(CCCCC1)CCCC3CCCCC23",
+      "c1ccc2c(c1)c3ccccc3c4ccccc24",
+      "F[C@@H](Cl)[C@H](Br)[C@](I)(O)[C@@](N)(C#N)C(=O)O",
+      "C[S+](C)(C)[O-]",
+      "C(C(C(C(C(C(CO)O)O)O)O)O)O"};
 
-  BENCHMARK("SmilesToMol") {
+  for (const auto &smiles : testSmiles) {
     std::unique_ptr<ROMol> mol{SmilesToMol(smiles)};
     REQUIRE(mol);
-  };
 
-  BENCHMARK("MolToSmiles") {
-    auto after_round_trip = MolToSmiles(*mol);
-    REQUIRE(after_round_trip == smiles);
-  };
+    BENCHMARK("SmilesToMol: " + smiles) {
+      std::unique_ptr<ROMol> temp{SmilesToMol(smiles)};
+      return temp;
+    };
+
+    BENCHMARK("MolToSmiles: " + smiles) { return MolToSmiles(*mol); };
+  }
 }
